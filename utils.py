@@ -1,14 +1,18 @@
 import sys
-from typing import Tuple
+from typing import Tuple, Optional
+from pathlib import Path
 
 import pygame
 
 
-def load_image(image_path: str) -> pygame.Surface:
-    return pygame.image.load(image_path)
+def load_image(image_path: Path, *, width: Optional[int] = None, height: Optional[int] = None) -> pygame.Surface:
+    image = pygame.image.load(str(image_path))
+    if width is not None and height is not None:
+        return pygame.transform.scale(image, (width, height))
+    return image
 
 
-def init_screen(title: str, icon_path: str, screen_size: Tuple[int, int]):
+def init_screen(title: str, icon_path: Path, screen_size: Tuple[int, int]):
     icon = load_image(icon_path)
     pygame.display.set_icon(icon)
     pygame.display.set_caption(title)
