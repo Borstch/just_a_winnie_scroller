@@ -28,16 +28,16 @@ def _should_generate_honey() -> bool:
     return random.randint(0, 101) < (config.HONEY_PROBABILITY * 100)
 
 
-def get_row() -> Tuple[Entity]:
+def get_row(scrolling_speed: float) -> List[Entity]:
     positions = list(random.choice(_POSITIONS))
     entities: List[Entity] = []
 
     if len(positions) == 3 or _should_generate_honey():
         honey_pos = random.choice(positions)
         positions.pop(positions.index(honey_pos))
-        entities.append(Honey(*honey_pos))
+        entities.append(Honey(*honey_pos, scrolling_speed))
 
     for pos in positions:
-        entities.append(Bee(*pos))
+        entities.append(Bee(*pos, scrolling_speed))
 
-    return tuple(entities)
+    return entities

@@ -13,7 +13,7 @@ from generation import get_row
 def main():
     pygame.init()
 
-    pygame.time.set_timer(INSTANTIATE_ROW, randrange(2000, 3500))
+    pygame.time.set_timer(INSTANTIATE_ROW, randrange(3000, 5000))
 
     screen = utils.init_screen(config.GAME_TITLE, config.ICON_PATH, config.SCREEN_SIZE)
     clock = pygame.time.Clock()
@@ -40,10 +40,14 @@ def main():
 
         for event in pygame.event.get():
             if event.type == INSTANTIATE_ROW:
-                rows.clear()
-                rows.append(get_row())
+                rows.append(get_row(config.SCROLLING_SPEED))
             elif event.type == pygame.QUIT:
                 running = False
+
+        for row in rows:
+            for entity in row:
+                if not entity.is_on_screen(screen):
+                    row.pop(row.index(entity))
 
         pygame.display.update()
         clock.tick(config.FRAME_RATE)
