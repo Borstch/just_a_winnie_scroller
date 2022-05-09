@@ -1,3 +1,5 @@
+from random import randint
+
 import pygame
 
 from .entity import Entity
@@ -7,7 +9,7 @@ class Bee(Entity):
     def __init__(self, x: float, y: float):
         super(Bee, self).__init__(x, y, self.WIDTH, self.HEIGHT)
 
-        self._speed = self._SWING_SPEED
+        self._speed = self._SWING_SPEED if randint(0, 2) else -self._SWING_SPEED
         self._lower_swing_bound = self._y - self._SWING_BOUNDARY_COEF
         self._upper_swing_bound = self._y + self._SWING_BOUNDARY_COEF
 
