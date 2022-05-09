@@ -41,7 +41,7 @@ class Player(Entity):
             self._move_right()
 
     def draw(self, screen: pygame.Surface) -> None:
-        pygame.draw.rect(screen, color=(0, 255, 0), rect=(self._x, self._y, self._width, self._height))
+        pygame.draw.rect(screen, color=(255, 0, 255), rect=(self._x, self._y, self._width, self._height))
 
     def _move_left(self) -> None:
         if self._x > self._boundary[0]:
