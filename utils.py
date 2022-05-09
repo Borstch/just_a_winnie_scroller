@@ -4,6 +4,8 @@ from pathlib import Path
 
 import pygame
 
+import config
+
 
 def load_image(image_path: Path, *, width: Optional[int] = None, height: Optional[int] = None) -> pygame.Surface:
     image = pygame.image.load(str(image_path))
@@ -21,3 +23,8 @@ def init_screen(title: str, icon_path: Path, screen_size: Tuple[int, int]):
 
 def exit_game() -> None:
     sys.exit()
+
+
+def get_screen_center() -> Tuple[int, int]:
+    width, height = config.SCREEN_SIZE
+    return width // 2, height // 2

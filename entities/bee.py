@@ -5,7 +5,7 @@ from .entity import Entity
 
 class Bee(Entity):
     def __init__(self, x: float, y: float):
-        super(Bee, self).__init__(x, y, self._WIDTH, self._HEIGHT)
+        super(Bee, self).__init__(x, y, self.WIDTH, self.HEIGHT)
 
         self._speed = self._SWING_SPEED
         self._lower_swing_bound = self._y - self._SWING_BOUNDARY_COEF
@@ -24,5 +24,5 @@ class Bee(Entity):
     
     _SWING_SPEED = 0.15
     _SWING_BOUNDARY_COEF = 3
-    _WIDTH = 50
-    _HEIGHT = 50
+    WIDTH = 50
+    HEIGHT = 50
