@@ -3,6 +3,7 @@ from random import randint
 import pygame
 
 import config
+import utils
 from .entity import Entity
 
 
@@ -20,7 +21,7 @@ class Bee(Entity):
         self._swing()
 
     def draw(self, screen: pygame.Surface) -> None:
-        pygame.draw.rect(screen, color=(255, 0, 0), rect=(self._x, self._y, self._width, self._height))
+        screen.blit(self._sprite, self.hitbox)
 
     def _swing(self) -> None:
         self._y += self._swing_speed
@@ -29,7 +30,8 @@ class Bee(Entity):
         if self._swings_count % self._SWING_FLIP_COEF == 0:
             self._swing_speed = -self._swing_speed
     
-    _SWING_SPEED = 0.3
-    _SWING_FLIP_COEF = config.FRAME_RATE * 1.5
+    _SWING_SPEED = 0.35
+    _SWING_FLIP_COEF = config.FRAME_RATE * 2
     WIDTH = 50
     HEIGHT = 50
+    _sprite = utils.load_image(config.BEE_SPRITE_PATH, width=WIDTH, height=HEIGHT)

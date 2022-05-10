@@ -1,4 +1,3 @@
-from random import randrange
 from typing import Tuple, Generator
 from pathlib import Path
 
@@ -30,6 +29,7 @@ class Game:
         self._max_speed = max_scrolling_speed
         self._speed_coef = scrolling_coef
 
+        self._font = pygame.font.SysFont("Impact", 38)
         self._screen = utils.init_screen(title, icon_path, screen_size)
         self._clock = pygame.time.Clock()
         self._bg = Background(background_path, *screen_size, int(scrolling_speed))
@@ -51,6 +51,10 @@ class Game:
     def exit() -> None:
         utils.exit_game()
 
+    @property
+    def _text(self) -> pygame.Surface:
+        return self._font.render(str(self._player.score), False, (176, 91, 24))
+
     def _update(self) -> None:
         self._bg.update(self._scrolling_speed)
         self._player.update(self._scrolling_speed)
@@ -69,6 +73,8 @@ class Game:
         for entity in self._get_entities():
             entity.draw(self._screen)
 
+        self._screen.blit(self._text, (10, 5))
+
         pygame.display.update()
 
     def _dispatch_events(self) -> None:
@@ -81,12 +87,10 @@ class Game:
     def _process_collision(self, entity: Entity) -> None:
         if isinstance(entity, Bee):
             self._running = False
-            print("[DEBUG] Player hit bee")
         elif isinstance(entity, Honey):
             self._player.score += 1
             self._update_scrolling_speed()
             self._update_spawn_timer()
-            print(f"[DEBUG] Player score is now {self._player.score}")
 
         self._remove_entity(entity)
 
@@ -112,6 +116,7 @@ class Game:
     @classmethod
     def _init_pygame_and_events(cls) -> None:
         pygame.init()
+        pygame.font.init()
         pygame.time.set_timer(INSTANTIATE_ROW, cls._SPAWN_RATE)
 
     _SPAWN_RATE = 5000

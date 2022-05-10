@@ -2,8 +2,11 @@ from pathlib import Path
 
 
 ASSETS_ROOT = Path("./assets")
-ICON_PATH = ASSETS_ROOT / "icons" / "winnie.png"
-BG_PATH = ASSETS_ROOT / "images" / "bg.jpg"
+ICON_PATH = ASSETS_ROOT / "icons" / "honey.png"
+BG_PATH = ASSETS_ROOT / "images" / "bg.png"
+PLAYER_SPRITE_PATH = ASSETS_ROOT / "images" / "winnie.png"
+HONEY_SPRITE_PATH = ASSETS_ROOT / "images" / "honey.png"
+BEE_SPRITE_PATH = ASSETS_ROOT / "images" / "bee.png"
 
 GAME_TITLE = "JustAWinnieScroller"
 SCREEN_SIZE = 400, 640

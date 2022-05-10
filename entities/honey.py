@@ -1,5 +1,7 @@
 import pygame
 
+import config
+import utils
 from .entity import Entity
 
 
@@ -13,7 +15,8 @@ class Honey(Entity):
         self._y += self._speed
 
     def draw(self, screen: pygame.Surface) -> None:
-        pygame.draw.rect(screen, color=(0, 255, 0), rect=(self._x, self._y, self._width, self._height))
+        screen.blit(self._sprite, self.hitbox)
 
     WIDTH = 50
-    HEIGHT = 50
+    HEIGHT = 55
+    _sprite = utils.load_image(config.HONEY_SPRITE_PATH, width=WIDTH, height=HEIGHT)
