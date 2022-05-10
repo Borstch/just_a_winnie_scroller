@@ -38,6 +38,9 @@ class Menu:
     ):
         self._screen = screen
 
+        self._menu_theme = pygame.mixer.Sound(config.MAIN_MENU_THEME_PATH)
+        self._menu_theme.play()
+
         self._menu = pygame_menu.Menu("", *menu_size, theme=_menu_theme)
         self._score = self._menu.add.label("Score: 0", padding=(10, 15, 5, 30))
         self._menu.add.button("PLAY", self._run_game(on_play), padding=(10, 45, 5, 60))
@@ -48,6 +51,8 @@ class Menu:
 
     def _run_game(self, runner: Callable[[], int]) -> Callable[[], None]:
         def run():
+            self._menu_theme.stop()
             score = runner()
             self._score.set_title(f"Score: {score}")
+            self._menu_theme.play()
         return run

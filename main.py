@@ -8,6 +8,7 @@ def main():
         config.GAME_TITLE,
         config.ICON_PATH,
         config.BG_PATH,
+        config.BACKGROUND_SOUND_PATH,
         config.SCREEN_SIZE,
         config.SCROLLING_SPEED,
         config.SCROLLING_COEF,

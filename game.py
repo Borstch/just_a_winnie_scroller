@@ -16,6 +16,7 @@ class Game:
             title: str,
             icon_path: Path,
             background_path: Path,
+            game_sound_path: Path,
             screen_size: Tuple[int, int],
             scrolling_speed: float,
             scrolling_coef: float,
@@ -23,6 +24,9 @@ class Game:
             frame_rate: int,
     ):
         self._init_pygame_and_events()
+
+        self._bg_sound = pygame.mixer.Sound(game_sound_path)
+        self._bg_sound.set_volume(0.25)
 
         self._initial_scrolling_speed = scrolling_speed
         self._scrolling_speed = scrolling_speed
@@ -45,12 +49,15 @@ class Game:
         return self._screen
 
     def main_loop(self) -> int:
+        self._bg_sound.play()
+
         while self._running:
             self._update()
             self._draw()
 
             self._clock.tick(self._frame_rate)
 
+        self._bg_sound.stop()
         return self._player.score
 
     @staticmethod
@@ -92,8 +99,10 @@ class Game:
 
     def _process_collision(self, entity: Entity) -> None:
         if isinstance(entity, Bee):
+            self._player.die()
             self._running = False
         elif isinstance(entity, Honey):
+            self._player.eat()
             self._player.score += 1
             self._update_scrolling_speed()
             self._update_spawn_timer()
@@ -123,6 +132,7 @@ class Game:
     def _init_pygame_and_events(cls) -> None:
         pygame.init()
         pygame.font.init()
+        pygame.mixer.init()
         pygame.time.set_timer(INSTANTIATE_ROW, cls._SPAWN_RATE)
 
     _SPAWN_RATE = 5000

@@ -25,6 +25,9 @@ class Player(Entity):
         self._swing_count = 0
         self._frame_count = 0
 
+        self._eat_sound = pygame.mixer.Sound(config.HONEY_PICKING_SOUND_PATH)
+        self._die_sound = pygame.mixer.Sound(config.GAME_OVER_SOUND_PATH)
+
         self.score = 0
 
     @classmethod
@@ -56,6 +59,12 @@ class Player(Entity):
         self._frame_count += 1
         if self._frame_count % self._SWING_SPEED == 0:
             self._swing_count = (self._swing_count + 1) % len(self._sprites)
+
+    def eat(self) -> None:
+        self._eat_sound.play(0, 0, 0)
+
+    def die(self) -> None:
+        self._die_sound.play(0, 0, 0)
 
     def _move_left(self) -> None:
         if not self._flipped:
