@@ -14,7 +14,8 @@ class Bee(Entity):
         self._swing_speed = self._SWING_SPEED if randint(0, 2) else -self._SWING_SPEED
         self._swings_count = 0
 
-    def update(self) -> None:
+    def update(self, scrolling_speed: float) -> None:
+        self._scrolling_speed = scrolling_speed
         self._y += self._scrolling_speed
         self._swing()
 

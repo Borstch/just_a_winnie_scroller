@@ -8,7 +8,8 @@ class Honey(Entity):
         super(Honey, self).__init__(x, y, self.WIDTH, self.HEIGHT)
         self._speed = scrolling_speed
 
-    def update(self) -> None:
+    def update(self, scrolling_speed: float) -> None:
+        self._speed = scrolling_speed
         self._y += self._speed
 
     def draw(self, screen: pygame.Surface) -> None:

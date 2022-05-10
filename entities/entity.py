@@ -15,7 +15,7 @@ class Entity(metaclass=ABCMeta):
         return pygame.Rect(self._x, self._y, self._width, self._height)
 
     @abstractmethod
-    def update(self) -> None:
+    def update(self, scrolling_speed: float) -> None:
         pass
 
     @abstractmethod

@@ -19,20 +19,25 @@ class Game:
             background_path: Path,
             screen_size: Tuple[int, int],
             scrolling_speed: float,
+            scrolling_coef: float,
+            max_scrolling_speed: float,
             frame_rate: int,
     ):
         self._init_pygame_and_events()
 
-        self._frame_rate = frame_rate
+        self._initial_scrolling_speed = scrolling_speed
         self._scrolling_speed = scrolling_speed
+        self._max_speed = max_scrolling_speed
+        self._speed_coef = scrolling_coef
 
         self._screen = utils.init_screen(title, icon_path, screen_size)
         self._clock = pygame.time.Clock()
         self._bg = Background(background_path, *screen_size, int(scrolling_speed))
 
         self._player = Player.from_config()
-        self._entities = []
+        self._entities = get_row(self._initial_scrolling_speed)
 
+        self._frame_rate = frame_rate
         self._running = True
 
     def main_loop(self) -> None:
@@ -42,12 +47,16 @@ class Game:
 
             self._clock.tick(self._frame_rate)
 
+    @staticmethod
+    def exit() -> None:
+        utils.exit_game()
+
     def _update(self) -> None:
-        self._bg.update()
-        self._player.update()
+        self._bg.update(self._scrolling_speed)
+        self._player.update(self._scrolling_speed)
 
         for entity in self._get_entities():
-            entity.update()
+            entity.update(self._scrolling_speed)
             if self._player.is_collide(entity):
                 self._process_collision(entity)
 
@@ -75,9 +84,18 @@ class Game:
             print("[DEBUG] Player hit bee")
         elif isinstance(entity, Honey):
             self._player.score += 1
+            self._update_scrolling_speed()
+            self._update_spawn_timer()
             print(f"[DEBUG] Player score is now {self._player.score}")
 
         self._remove_entity(entity)
+
+    def _update_scrolling_speed(self) -> None:
+        self._scrolling_speed = min(self._scrolling_speed * self._speed_coef, self._max_speed)
+
+    def _update_spawn_timer(self) -> None:
+        increase_coef = self._initial_scrolling_speed / self._scrolling_speed
+        pygame.time.set_timer(INSTANTIATE_ROW, int(self._SPAWN_RATE * increase_coef))
 
     def _get_entities(self) -> Generator[Entity, None, None]:
         for entity in self._entities:
@@ -91,11 +109,9 @@ class Game:
     def _remove_entity(self, entity: Entity) -> None:
         self._entities.pop(self._entities.index(entity))
 
-    @staticmethod
-    def exit() -> None:
-        utils.exit_game()
-
-    @staticmethod
-    def _init_pygame_and_events() -> None:
+    @classmethod
+    def _init_pygame_and_events(cls) -> None:
         pygame.init()
-        pygame.time.set_timer(INSTANTIATE_ROW, randrange(4000, 5000))
+        pygame.time.set_timer(INSTANTIATE_ROW, cls._SPAWN_RATE)
+
+    _SPAWN_RATE = 5000

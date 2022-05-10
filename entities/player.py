@@ -34,7 +34,7 @@ class Player(Entity):
 
         return cls(player_x, player_y, player_width, player_height, config.MOVEMENT_SPEED, boundary)
 
-    def update(self) -> None:
+    def update(self, scrolling_speed: float) -> None:
         keys = pygame.key.get_pressed()
 
         if keys[pygame.K_LEFT]:

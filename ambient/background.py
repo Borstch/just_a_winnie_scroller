@@ -14,7 +14,9 @@ class Background:
         self._first_bg_y = -self._height
         self._second_bg_y = 0.0
 
-    def update(self) -> None:
+    def update(self, scrolling_speed: float) -> None:
+        self._vertical_speed = scrolling_speed
+
         self._first_bg_y += self._vertical_speed
         self._second_bg_y += self._vertical_speed
 

@@ -9,6 +9,8 @@ def main():
         config.BG_PATH,
         config.SCREEN_SIZE,
         config.SCROLLING_SPEED,
+        config.SCROLLING_COEF,
+        config.MAX_SCROLLING_SPEED,
         config.FRAME_RATE,
     )
     game.main_loop()
