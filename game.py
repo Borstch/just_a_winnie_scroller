@@ -58,7 +58,16 @@ class Game:
             self._clock.tick(self._frame_rate)
 
         self._bg_sound.stop()
-        return self._player.score
+        score = self._player.score
+        self.reset()
+        return score
+
+    def reset(self) -> None:
+        self._running = True
+        self._scrolling_speed = self._initial_scrolling_speed
+        self._bg.update(self._scrolling_speed)
+        self._player = Player.from_config()
+        self._entities.clear()
 
     @staticmethod
     def exit() -> None:
@@ -135,4 +144,4 @@ class Game:
         pygame.mixer.init()
         pygame.time.set_timer(INSTANTIATE_ROW, cls._SPAWN_RATE)
 
-    _SPAWN_RATE = 5000
+    _SPAWN_RATE = 5500
