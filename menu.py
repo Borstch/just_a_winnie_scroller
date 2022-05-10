@@ -33,14 +33,21 @@ class Menu:
             self,
             screen: pygame.Surface,
             menu_size: Tuple[int, int],
-            on_play: Callable[[None], None],
-            on_quit: Callable[[None], None],
+            on_play: Callable[[], int],
+            on_quit: Callable[[], None],
     ):
         self._screen = screen
 
         self._menu = pygame_menu.Menu("", *menu_size, theme=_menu_theme)
-        self._menu.add.button("PLAY", on_play, padding=(10, 45, 5, 60))
+        self._score = self._menu.add.label("Score: 0", padding=(10, 15, 5, 30))
+        self._menu.add.button("PLAY", self._run_game(on_play), padding=(10, 45, 5, 60))
         self._menu.add.button("QUIT", on_quit, padding=(10, 55, 5, 70))
 
     def draw(self) -> None:
         self._menu.mainloop(self._screen)
+
+    def _run_game(self, runner: Callable[[], int]) -> Callable[[], None]:
+        def run():
+            score = runner()
+            self._score.set_title(f"Score: {score}")
+        return run

@@ -44,12 +44,14 @@ class Game:
     def screen(self) -> pygame.Surface:
         return self._screen
 
-    def main_loop(self) -> None:
+    def main_loop(self) -> int:
         while self._running:
             self._update()
             self._draw()
 
             self._clock.tick(self._frame_rate)
+
+        return self._player.score
 
     @staticmethod
     def exit() -> None:
