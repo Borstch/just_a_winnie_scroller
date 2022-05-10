@@ -26,6 +26,6 @@ class Entity(metaclass=ABCMeta):
         return self.hitbox.colliderect(other.hitbox)
 
     def is_on_screen(self, screen: pygame.Surface) -> bool:
-        vertically_on_screen = 0 <= self._y <= screen.get_height()
+        vertically_on_screen = self._y <= screen.get_height()
         horizontally_on_screen = 0 <= self._x <= screen.get_width()
         return vertically_on_screen and horizontally_on_screen

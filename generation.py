@@ -11,7 +11,7 @@ _X_ONE_THIRD = _SCREEN_WIDTH // 3 - Bee.WIDTH * 1.5
 _X_TWO_THIRD = 2 * _SCREEN_WIDTH // 3 + Bee.WIDTH // 2
 _X_CENTER = get_screen_center()[0] - Bee.WIDTH // 2
 
-_Y = Bee.HEIGHT * 1.5
+_Y = -Honey.HEIGHT
 
 _POSITIONS = (
     ((_X_ONE_THIRD, _Y),),
