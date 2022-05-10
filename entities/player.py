@@ -19,6 +19,8 @@ class Player(Entity):
         self._horizontal_speed = movement_speed
         self._boundary = horizontal_boundary
 
+        self.score = 0
+
     @classmethod
     def from_config(cls) -> "Player":
         screen_width, screen_height = config.SCREEN_SIZE

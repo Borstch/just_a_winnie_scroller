@@ -5,7 +5,7 @@ import pygame
 import config
 import utils
 from ambient import Background
-from entities import Player
+from entities import Player, Bee, Honey
 from events import INSTANTIATE_ROW
 from generation import get_row
 
@@ -13,7 +13,7 @@ from generation import get_row
 def main():
     pygame.init()
 
-    pygame.time.set_timer(INSTANTIATE_ROW, randrange(3000, 5000))
+    pygame.time.set_timer(INSTANTIATE_ROW, randrange(4000, 5000))
 
     screen = utils.init_screen(config.GAME_TITLE, config.ICON_PATH, config.SCREEN_SIZE)
     clock = pygame.time.Clock()
@@ -30,6 +30,15 @@ def main():
         for row in rows:
             for entity in row:
                 entity.update()
+
+                if player.is_collide(entity):
+                    if isinstance(entity, Bee):
+                        running = False
+                        print("[DEBUG] Player hit bee")
+                    elif isinstance(entity, Honey):
+                        player.score += 1
+                        row.pop(row.index(entity))
+                        print(f"[DEBUG] Player score is now {player.score}")
 
         bg.draw(screen)
         player.draw(screen)
