@@ -1,4 +1,5 @@
 from random import randint
+from typing import List
 
 import pygame
 
@@ -15,13 +16,16 @@ class Bee(Entity):
         self._swing_speed = self._SWING_SPEED if randint(0, 2) else -self._SWING_SPEED
         self._swings_count = 0
 
+        self._fly_count = 0
+
     def update(self, scrolling_speed: float) -> None:
         self._scrolling_speed = scrolling_speed
         self._y += self._scrolling_speed
         self._swing()
 
     def draw(self, screen: pygame.Surface) -> None:
-        screen.blit(self._sprite, self.hitbox)
+        screen.blit(self._sprites[self._fly_count], self.hitbox)
+        self._fly_count = (self._fly_count + 1) % len(self._sprites)
 
     def _swing(self) -> None:
         self._y += self._swing_speed
@@ -34,4 +38,7 @@ class Bee(Entity):
     _SWING_FLIP_COEF = config.FRAME_RATE * 2
     WIDTH = 50
     HEIGHT = 50
-    _sprite = utils.load_image(config.BEE_SPRITE_PATH, width=WIDTH, height=HEIGHT)
+    _sprites = [
+        utils.load_image(sprite_path, width=50, height=50)
+        for sprite_path in config.BEE_SPRITES_PATH
+    ]

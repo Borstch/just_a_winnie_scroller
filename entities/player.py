@@ -22,6 +22,8 @@ class Player(Entity):
 
         self._flipped = False
         self._should_flip = False
+        self._swing_count = 0
+        self._frame_count = 0
 
         self.score = 0
 
@@ -45,11 +47,15 @@ class Player(Entity):
 
     def draw(self, screen: pygame.Surface) -> None:
         if self._should_flip:
-            self._sprite = pygame.transform.flip(self._sprite, flip_x=True, flip_y=False)
+            self._sprites = [pygame.transform.flip(sprite, flip_x=True, flip_y=False) for sprite in self._sprites]
             self._flipped = not self._flipped
             self._should_flip = False
 
-        screen.blit(self._sprite, self.hitbox)
+        screen.blit(self._sprites[self._swing_count], self.hitbox)
+
+        self._frame_count += 1
+        if self._frame_count % self._SWING_SPEED == 0:
+            self._swing_count = (self._swing_count + 1) % len(self._sprites)
 
     def _move_left(self) -> None:
         if not self._flipped:
@@ -67,4 +73,8 @@ class Player(Entity):
 
     _WIDTH = 80
     _HEIGHT = 190
-    _sprite = utils.load_image(config.PLAYER_SPRITE_PATH, width=_WIDTH, height=_HEIGHT)
+    _SWING_SPEED = config.FRAME_RATE * 0.5
+    _sprites = [
+        utils.load_image(sprite_path, width=80, height=190)
+        for sprite_path in config.PLAYER_SPRITES_PATH
+    ]

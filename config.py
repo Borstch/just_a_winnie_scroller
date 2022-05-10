@@ -6,9 +6,9 @@ ICON_PATH = ASSETS_ROOT / "icons" / "honey.png"
 BG_PATH = ASSETS_ROOT / "images" / "bg.png"
 MENU_BG_PATH = ASSETS_ROOT / "images" / "bg.png"
 MENU_BUTTON_PATH = ASSETS_ROOT / "images" / "button.png"
-PLAYER_SPRITE_PATH = ASSETS_ROOT / "images" / "winnie.png"
 HONEY_SPRITE_PATH = ASSETS_ROOT / "images" / "honey.png"
-BEE_SPRITE_PATH = ASSETS_ROOT / "images" / "bee.png"
+PLAYER_SPRITES_PATH = list((ASSETS_ROOT / "images").glob("winnie*.png"))
+BEE_SPRITES_PATH = list((ASSETS_ROOT / "images").glob("bee*.png"))
 
 GAME_TITLE = "JustAWinnieScroller"
 SCREEN_SIZE = 400, 640
