@@ -1,5 +1,6 @@
 import config
 from game import Game
+from menu import Menu
 
 
 def main():
@@ -13,8 +14,8 @@ def main():
         config.MAX_SCROLLING_SPEED,
         config.FRAME_RATE,
     )
-    game.main_loop()
-    game.exit()
+    menu = Menu(game.screen, config.SCREEN_SIZE, game.main_loop, game.exit)
+    menu.draw()
 
 
 if __name__ == '__main__':

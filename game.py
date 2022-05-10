@@ -40,6 +40,10 @@ class Game:
         self._frame_rate = frame_rate
         self._running = True
 
+    @property
+    def screen(self) -> pygame.Surface:
+        return self._screen
+
     def main_loop(self) -> None:
         while self._running:
             self._update()

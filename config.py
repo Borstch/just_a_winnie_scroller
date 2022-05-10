@@ -4,6 +4,8 @@ from pathlib import Path
 ASSETS_ROOT = Path("./assets")
 ICON_PATH = ASSETS_ROOT / "icons" / "honey.png"
 BG_PATH = ASSETS_ROOT / "images" / "bg.png"
+MENU_BG_PATH = ASSETS_ROOT / "images" / "bg.png"
+MENU_BUTTON_PATH = ASSETS_ROOT / "images" / "button.png"
 PLAYER_SPRITE_PATH = ASSETS_ROOT / "images" / "winnie.png"
 HONEY_SPRITE_PATH = ASSETS_ROOT / "images" / "honey.png"
 BEE_SPRITE_PATH = ASSETS_ROOT / "images" / "bee.png"
