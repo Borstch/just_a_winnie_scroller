@@ -39,7 +39,7 @@ class Menu:
         self._screen = screen
 
         self._menu_theme = pygame.mixer.Sound(config.MAIN_MENU_THEME_PATH)
-        self._menu_theme.play()
+        self._menu_theme.play(-1)
 
         self._menu = pygame_menu.Menu("", *menu_size, theme=_menu_theme)
         self._score = self._menu.add.label("Score: 0", padding=(10, 15, 5, 30))
@@ -54,5 +54,5 @@ class Menu:
             self._menu_theme.stop()
             score = runner()
             self._score.set_title(f"Score: {score}")
-            self._menu_theme.play()
+            self._menu_theme.play(-1)
         return run

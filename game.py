@@ -49,7 +49,7 @@ class Game:
         return self._screen
 
     def main_loop(self) -> int:
-        self._bg_sound.play()
+        self._bg_sound.play(-1)
 
         while self._running:
             self._update()
@@ -144,4 +144,4 @@ class Game:
         pygame.mixer.init()
         pygame.time.set_timer(INSTANTIATE_ROW, cls._SPAWN_RATE)
 
-    _SPAWN_RATE = 5500
+    _SPAWN_RATE = 5750
