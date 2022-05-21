@@ -1,8 +1,8 @@
 import random
-from typing import Tuple, List
+from typing import List
 
 import config
-from entities import Entity, Bee, Honey
+from entities import Entity, Bee, MovingBee, Honey
 from utils import get_screen_center
 
 
@@ -32,7 +32,11 @@ def get_row(scrolling_speed: float) -> List[Entity]:
     positions = list(random.choice(_POSITIONS))
     entities: List[Entity] = []
 
-    if len(positions) == 3 or _should_generate_honey():
+    if len(positions) == 1:
+        moving_bee_pos = positions.pop()
+        direction = random.choice(["LEFT", "RIGHT"])
+        entities.append(MovingBee(*moving_bee_pos, scrolling_speed, direction))
+    elif len(positions) == 3 or _should_generate_honey():
         honey_pos = random.choice(positions)
         positions.pop(positions.index(honey_pos))
         entities.append(Honey(*honey_pos, scrolling_speed))
