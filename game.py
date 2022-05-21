@@ -7,7 +7,7 @@ import utils
 from ambient import Background
 from entities import Entity, Player, Bee, Honey
 from events import INSTANTIATE_ROW
-from generation import get_row
+from generation import get_average_row, get_extended_row
 
 
 class Game:
@@ -21,6 +21,7 @@ class Game:
             scrolling_speed: float,
             scrolling_coef: float,
             max_scrolling_speed: float,
+            score_threshold: int,
             frame_rate: int,
     ):
         self._init_pygame_and_events()
@@ -32,6 +33,7 @@ class Game:
         self._scrolling_speed = scrolling_speed
         self._max_speed = max_scrolling_speed
         self._speed_coef = scrolling_coef
+        self._score_threshold = score_threshold
 
         self._font = pygame.font.SysFont("Impact", 38)
         self._screen = utils.init_screen(title, icon_path, screen_size)
@@ -39,7 +41,7 @@ class Game:
         self._bg = Background(background_path, *screen_size, int(scrolling_speed))
 
         self._player = Player.from_config()
-        self._entities = get_row(self._initial_scrolling_speed)
+        self._entities = get_average_row(self._initial_scrolling_speed)
 
         self._frame_rate = frame_rate
         self._running = True
@@ -102,7 +104,12 @@ class Game:
     def _dispatch_events(self) -> None:
         for event in pygame.event.get():
             if event.type == INSTANTIATE_ROW:
-                self._entities.extend(get_row(self._scrolling_speed))
+                if self._player.score < self._score_threshold:
+                    self._entities.extend(get_average_row(self._scrolling_speed))
+                else:
+                    self._entities.extend(
+                        get_extended_row(self._scrolling_speed, self._player.is_on_left_side(self._screen))
+                    )
             elif event.type == pygame.QUIT:
                 self._running = False
 
@@ -144,4 +151,4 @@ class Game:
         pygame.mixer.init()
         pygame.time.set_timer(INSTANTIATE_ROW, cls._SPAWN_RATE)
 
-    _SPAWN_RATE = 5750
+    _SPAWN_RATE = 5800

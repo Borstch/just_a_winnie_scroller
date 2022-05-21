@@ -29,3 +29,6 @@ class Entity(metaclass=ABCMeta):
         vertically_on_screen = self._y <= screen.get_height()
         horizontally_on_screen = 0 <= self._x <= screen.get_width()
         return vertically_on_screen and horizontally_on_screen
+
+    def is_on_left_side(self, screen: pygame.Surface) -> bool:
+        return self._x <= screen.get_width() // 2 - self._width // 2

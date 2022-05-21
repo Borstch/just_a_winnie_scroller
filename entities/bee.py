@@ -27,6 +27,11 @@ class Bee(Entity):
         screen.blit(self._sprites[self._fly_count], self.hitbox)
         self._fly_count = (self._fly_count + 1) % len(self._sprites)
 
+    def is_on_screen(self, screen: pygame.Surface) -> bool:
+        vertically_on_screen = self._y <= screen.get_height()
+        horizontally_on_screen = -Bee.WIDTH <= self._x <= screen.get_width() + Bee.WIDTH
+        return vertically_on_screen and horizontally_on_screen
+
     def _swing(self) -> None:
         self._y += self._swing_speed
 
