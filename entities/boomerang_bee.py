@@ -1,10 +1,15 @@
-from .bee import Bee
 import config
+import utils
+from .bee import Bee
 
 
 class BoomerangBee(Bee):
     def __init__(self, x: float, y: float, scrolling_speed: float):
         super(BoomerangBee, self).__init__(x, y, scrolling_speed)
+        self._sprites = [
+            utils.load_image(sprite_path, width=self.WIDTH, height=self.HEIGHT)
+            for sprite_path in config.ANGRY_BEE_SPRITES_PATH
+        ]
         self._going_back = False
         self._remaining_turns = 2
 
