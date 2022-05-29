@@ -16,7 +16,7 @@ class MovingBee(Bee):
         self._direction = direction
 
         if self._should_flip_sprites():
-            self._sprites = [pygame.transform.flip(sprite, flip_x=True, flip_y=False) for sprite in self._sprites]
+            self._flip_sprites()
 
     def update(self, scrolling_speed: float) -> None:
         super(MovingBee, self).update(scrolling_speed)
@@ -32,3 +32,6 @@ class MovingBee(Bee):
 
     def _should_flip_sprites(self) -> bool:
         return self._direction == "RIGHT"
+
+    def _flip_sprites(self) -> None:
+        self._sprites = [pygame.transform.flip(sprite, flip_x=True, flip_y=False) for sprite in self._sprites]
