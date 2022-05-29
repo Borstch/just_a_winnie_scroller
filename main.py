@@ -13,7 +13,6 @@ def main():
         config.SCROLLING_SPEED,
         config.SCROLLING_COEF,
         config.MAX_SCROLLING_SPEED,
-        config.SCORE_THRESHOLD,
         config.FRAME_RATE,
     )
     menu = Menu(game.screen, config.SCREEN_SIZE, game.main_loop, game.exit)

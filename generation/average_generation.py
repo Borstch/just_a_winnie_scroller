@@ -2,7 +2,6 @@ import random
 from typing import List
 
 from entities import Entity, Bee, Honey
-from .generation_conditions import _should_generate_honey
 from .common_positions import (
     _X_ONE_THIRD, _X_CENTER, _X_TWO_THIRD, _Y
 )
@@ -21,10 +20,10 @@ _HONEY_POSITIONS = (
 )
 
 
-def get_average_row(scrolling_speed: float) -> List[Entity]:
+def get_average_row(scrolling_speed: float, generate_honey: bool) -> List[Entity]:
     entities: List[Entity] = []
 
-    honey_pos = random.choice(_HONEY_POSITIONS) if _should_generate_honey() else None
+    honey_pos = random.choice(_HONEY_POSITIONS) if generate_honey else None
     bees_positions = [pos for pos in list(random.choice(_BEES_POSITIONS)) if pos != honey_pos]
 
     if honey_pos is not None:
