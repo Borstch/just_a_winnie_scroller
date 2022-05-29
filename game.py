@@ -68,6 +68,7 @@ class Game:
         self._scrolling_speed = self._initial_scrolling_speed
         self._bg.update(self._scrolling_speed)
         self._player = Player.from_config()
+        self._generator = RowGenerator()
         self._entities.clear()
 
     @staticmethod
